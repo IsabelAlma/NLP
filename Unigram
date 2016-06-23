@@ -1,0 +1,58 @@
+package ngram;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class NGram {
+
+   
+    public static void main(String[] args) {
+        
+       Scanner str = new Scanner (System.in); 
+        System.out.print("Enter Phrase: ");
+        String phrase = str.nextLine();
+        phrase = phrase.toLowerCase(); 
+        
+        //array containing the alphabet
+        //used in parallel with alphabetCount array
+        char[] alphabetArray = new char[26];
+        for(int i = 97; i < 123; i++){ //character code for a is 97 snd z is 122
+            alphabetArray[i-97] = (char)i;  //makes index 0 equate to a
+        }
+        
+        int[] alphabetCount = new int[26];
+  
+        for ( int i = 0; i < phrase.length(); i++ ) {
+         char ch=  phrase.charAt(i);
+         int value = (int) ch - 97; //97 and 'a' are equivalent
+         if (value >= 0 && value <= 25){
+         alphabetCount[value]++;
+            }
+        }
+        
+        //nested array
+        for(int i = 0; i <alphabetCount.length; i++){
+            //compares j and i
+            for(int j=i+1; j < alphabetCount.length - 1; j++){
+                if(alphabetCount[i] < alphabetCount[j]){
+                    int temp = alphabetCount[i];
+                    alphabetCount[i] = alphabetCount[j];
+                    alphabetCount[j]= temp;
+                    
+                    char tempa = alphabetArray[i];
+                    alphabetArray[i] = alphabetArray[j];
+                    alphabetArray[j]= tempa;
+  
+                }
+            }
+        }
+     
+        for (int i = 0; i < alphabetCount.length; i++) {
+            if(alphabetCount[i]>0){
+         
+        System.out.println(alphabetArray[i] + "  : "+alphabetCount[i]);   //Show the result.
+        
+            }         
+         }
+      
+       }
+    }
